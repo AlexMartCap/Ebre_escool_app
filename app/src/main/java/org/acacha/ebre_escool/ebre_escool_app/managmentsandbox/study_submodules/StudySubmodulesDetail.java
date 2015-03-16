@@ -395,9 +395,7 @@ public class StudySubmodulesDetail extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), "INSERT" +
-                            "" +
-                            " ERROR! " + error.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "INSERT" + "" +" ERROR! " + error.getMessage(), Toast.LENGTH_LONG).show();
 
                 }
             });

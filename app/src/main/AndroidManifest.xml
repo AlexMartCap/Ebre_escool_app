@@ -8,8 +8,16 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
 
+    <!-- GCM connects to Google Services. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- GCM requires a Google account. -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <permission android:name="org.acacha.ebre_escool.ebre_escool_app..permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="org.acacha.ebre_escool.ebre_escool_app..permission.C2D_MESSAGE" />
+    <!-- This app has permission to register and receive dataf message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <!--vibrator-->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -20,6 +28,7 @@
     <!-- Needed by mAccountManager.setPassword(account, accountPassword); -->
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
+    <!-- client -->
     <!-- client -->
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission
@@ -45,6 +54,25 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name="com.pushbots.google.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Receives the registration id. -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.example.sampleapp" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.pushbots.push.DefaultPushHandler" />
+        <service android:name="com.pushbots.push.GCMIntentService" />
+        <!--<service android:name="org.openudid.OpenUDID_service" android:exported="false">
+            <intent-filter>
+                <action android:name="org.openudid.GETUDID" />
+            </intent-filter>
+        </service>-->
 
         <service android:name=".accounts.EbreEscoolAuthenticatorService" >
             <intent-filter>
@@ -74,8 +102,8 @@
         <activity android:name=".SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="org.acacha.ebre_escool.ebre_escool_app.MESSAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
